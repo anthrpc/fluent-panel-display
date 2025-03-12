@@ -28,9 +28,9 @@ const MultiLangGreeting: React.FC = () => {
 
   useEffect(() => {
     let currentIndex = 0;
-    const tl = gsap.timeline();
     const cycleCount = Math.floor(5000 / 100); // 5 seconds total, 0.1s per transition
     let cycles = 0;
+    let tl = gsap.timeline();
     
     const cycleGreetings = () => {
       currentIndex = (currentIndex + 1) % greetings.length;
@@ -46,20 +46,40 @@ const MultiLangGreeting: React.FC = () => {
     };
 
     if (greetingElement) {
-      tl.to(greetingElement, { 
+      // First phase: ease-in for cycling through languages
+      const firstPhaseAnimations = gsap.timeline({ repeat: cycleCount - 2 });
+      firstPhaseAnimations.to(greetingElement, { 
         opacity: 0, 
         y: -10, 
         duration: 0.05, 
-        ease: "power2.inOut",
+        ease: "power2.in", // Use ease-in for the first phase
         onComplete: cycleGreetings 
       })
       .to(greetingElement, { 
         opacity: 1, 
         y: 0, 
         duration: 0.05, 
-        ease: "power2.inOut" 
-      })
-      .repeat(cycleCount - 1);
+        ease: "power2.in" 
+      });
+      
+      // Second phase: ease-out for settling on the final language
+      tl.add(firstPhaseAnimations)
+        .to(greetingElement, { 
+          opacity: 0, 
+          y: -10, 
+          duration: 0.05, 
+          ease: "power2.out", // Use ease-out for the final transition
+          onComplete: () => {
+            // Set to user's region language (for demo, using English)
+            setCurrentGreeting(greetings[0]);
+          }
+        })
+        .to(greetingElement, { 
+          opacity: 1, 
+          y: 0, 
+          duration: 0.05, 
+          ease: "power2.out" 
+        });
     }
 
     return () => {

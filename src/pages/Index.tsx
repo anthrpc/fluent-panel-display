@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import NavBar from '../components/NavBar';
@@ -63,21 +64,23 @@ const Index: React.FC = () => {
           </div>
           
           {/* Right Column - Content */}
-          <div className="md:col-span-2 relative min-h-[600px]">
-            <div className="panel absolute w-full" data-section="about">
-              <About />
-            </div>
-            
-            <div className="panel absolute w-full" data-section="experience">
-              <Experience />
-            </div>
-            
-            <div className="panel absolute w-full" data-section="projects">
-              <Projects />
-            </div>
-            
-            <div className="panel absolute w-full" data-section="hire">
-              <Hire />
+          <div className="md:col-span-2 relative min-h-[600px] flex flex-col">
+            <div className="flex-grow relative">
+              <div className="panel absolute w-full" data-section="about">
+                <About />
+              </div>
+              
+              <div className="panel absolute w-full" data-section="experience">
+                <Experience />
+              </div>
+              
+              <div className="panel absolute w-full" data-section="projects">
+                <Projects />
+              </div>
+              
+              <div className="panel absolute w-full" data-section="hire">
+                <Hire />
+              </div>
             </div>
             
             <Footer />
