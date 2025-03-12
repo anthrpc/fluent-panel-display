@@ -1,7 +1,24 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import { gsap } from 'gsap';
 
 const About: React.FC = () => {
+  const skillBarsRef = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    skillBarsRef.current.forEach((bar) => {
+      const width = bar.getAttribute('data-width') || '0';
+      gsap.fromTo(bar,
+        { width: '0%' },
+        { 
+          width: width,
+          duration: 1.5,
+          ease: "power2.out"
+        }
+      );
+    });
+  }, []);
+
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-semibold mb-4">About</h2>
@@ -24,7 +41,11 @@ const About: React.FC = () => {
               <span>80%</span>
             </div>
             <div className="skill-bar">
-              <div className="skill-progress" style={{ width: '80%' }}></div>
+              <div 
+                ref={el => el && skillBarsRef.current.push(el)}
+                data-width="80%"
+                className="skill-progress"
+              ></div>
             </div>
           </div>
           
@@ -34,7 +55,11 @@ const About: React.FC = () => {
               <span>65%</span>
             </div>
             <div className="skill-bar">
-              <div className="skill-progress" style={{ width: '65%' }}></div>
+              <div 
+                ref={el => el && skillBarsRef.current.push(el)}
+                data-width="65%"
+                className="skill-progress"
+              ></div>
             </div>
           </div>
           
@@ -44,7 +69,11 @@ const About: React.FC = () => {
               <span>45%</span>
             </div>
             <div className="skill-bar">
-              <div className="skill-progress" style={{ width: '45%' }}></div>
+              <div 
+                ref={el => el && skillBarsRef.current.push(el)}
+                data-width="45%"
+                className="skill-progress"
+              ></div>
             </div>
           </div>
           
@@ -54,7 +83,11 @@ const About: React.FC = () => {
               <span>30%</span>
             </div>
             <div className="skill-bar">
-              <div className="skill-progress" style={{ width: '30%' }}></div>
+              <div 
+                ref={el => el && skillBarsRef.current.push(el)}
+                data-width="30%"
+                className="skill-progress"
+              ></div>
             </div>
           </div>
         </div>

@@ -28,28 +28,38 @@ const MultiLangGreeting: React.FC = () => {
 
   useEffect(() => {
     let currentIndex = 0;
-    const tl = gsap.timeline({ repeat: -1 });
+    const tl = gsap.timeline();
+    const cycleCount = Math.floor(5000 / 100); // 5 seconds total, 0.1s per transition
+    let cycles = 0;
     
     const cycleGreetings = () => {
       currentIndex = (currentIndex + 1) % greetings.length;
       setCurrentGreeting(greetings[currentIndex]);
+      cycles++;
+
+      // Stop after 5 seconds (50 cycles at 0.1s each)
+      if (cycles >= cycleCount) {
+        // Set to user's region language (for demo, using English)
+        setCurrentGreeting(greetings[0]);
+        return;
+      }
     };
 
     if (greetingElement) {
       tl.to(greetingElement, { 
         opacity: 0, 
         y: -10, 
-        duration: 0.3, 
-        ease: "power2.in",
+        duration: 0.05, 
+        ease: "power2.inOut",
         onComplete: cycleGreetings 
       })
       .to(greetingElement, { 
         opacity: 1, 
         y: 0, 
-        duration: 0.5, 
-        ease: "power2.out" 
+        duration: 0.05, 
+        ease: "power2.inOut" 
       })
-      .to({}, { duration: 5 }); // Pause for 5 seconds
+      .repeat(cycleCount - 1);
     }
 
     return () => {

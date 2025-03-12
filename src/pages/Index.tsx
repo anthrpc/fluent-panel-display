@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 import NavBar from '../components/NavBar';
@@ -24,40 +23,20 @@ const Index: React.FC = () => {
       ease: 'power3.out',
     });
 
-    // Animate the sections when they appear
-    const panels = document.querySelectorAll('.panel');
-    gsap.set(panels, { opacity: 0, y: 10 });
-
-    // Show active panel
-    const activePanel = document.querySelector('.panel.active');
-    if (activePanel) {
-      gsap.to(activePanel, {
-        opacity: 1,
-        y: 0,
-        duration: 0.5,
-        ease: 'power2.out',
-      });
-    }
-  }, []);
-
-  useEffect(() => {
     // Handle panel transitions
     const panels = document.querySelectorAll('.panel');
-    
-    // Hide all panels
-    gsap.to(panels, {
-      opacity: 0,
-      y: 10,
-      duration: 0.3,
-      ease: 'power2.in',
-    });
-    
-    // Show active panel
+    gsap.set(panels, { position: 'absolute', width: '100%' });
+
     const activePanel = document.querySelector(`.panel[data-section="${activeSection}"]`);
     if (activePanel) {
+      gsap.to(panels, {
+        opacity: 0,
+        duration: 0.3,
+        ease: 'power2.inOut',
+      });
+      
       gsap.to(activePanel, {
         opacity: 1,
-        y: 0,
         duration: 0.5,
         delay: 0.2,
         ease: 'power2.out',
@@ -84,20 +63,20 @@ const Index: React.FC = () => {
           </div>
           
           {/* Right Column - Content */}
-          <div className="md:col-span-2">
-            <div className="panel active" data-section="about">
+          <div className="md:col-span-2 relative min-h-[600px]">
+            <div className="panel absolute w-full" data-section="about">
               <About />
             </div>
             
-            <div className="panel" data-section="experience">
+            <div className="panel absolute w-full" data-section="experience">
               <Experience />
             </div>
             
-            <div className="panel" data-section="projects">
+            <div className="panel absolute w-full" data-section="projects">
               <Projects />
             </div>
             
-            <div className="panel" data-section="hire">
+            <div className="panel absolute w-full" data-section="hire">
               <Hire />
             </div>
             
