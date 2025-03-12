@@ -46,39 +46,20 @@ const MultiLangGreeting: React.FC = () => {
     };
 
     if (greetingElement) {
-      // First phase: fast cycling with ease-in
-      if (cycles < cycleCount / 2) {
-        tl.to(greetingElement, { 
-          opacity: 0, 
-          y: -10, 
-          duration: 0.05, 
-          ease: "power2.in", // ease-in for first loop
-          onComplete: cycleGreetings 
-        })
-        .to(greetingElement, { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.05, 
-          ease: "power2.in"
-        });
-      } else {
-        // Second phase: transition to final with ease-out
-        tl.to(greetingElement, { 
-          opacity: 0, 
-          y: -10, 
-          duration: 0.05, 
-          ease: "power2.out", // ease-out for second loop
-          onComplete: cycleGreetings 
-        })
-        .to(greetingElement, { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.05, 
-          ease: "power2.out"
-        });
-      }
-      
-      tl.repeat(cycleCount - 1);
+      tl.to(greetingElement, { 
+        opacity: 0, 
+        y: -10, 
+        duration: 0.05, 
+        ease: "power2.inOut",
+        onComplete: cycleGreetings 
+      })
+      .to(greetingElement, { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.05, 
+        ease: "power2.inOut" 
+      })
+      .repeat(cycleCount - 1);
     }
 
     return () => {
