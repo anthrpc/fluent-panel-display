@@ -42,11 +42,11 @@ const projects: Project[] = [
 const Projects: React.FC = () => {
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6 tracking-tight">Projects</h2>
+      <h2 className="text-2xl font-semibold mb-6 tracking-tight animate-element">Projects</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project, index) => (
-          <div key={index} className="border border-secondary rounded-lg p-5 hover:border-muted-foreground transition-colors duration-300">
+          <div key={index} className="border border-secondary rounded-lg p-5 hover:border-muted-foreground transition-colors duration-300 animate-element" style={{animationDelay: `${index * 0.1}s`}}>
             <div className="flex justify-between items-start mb-3">
               <h3 className="text-xl font-medium tracking-tight">
                 {project.link ? (

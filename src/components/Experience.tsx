@@ -54,11 +54,11 @@ const experiences: ExperienceItem[] = [
 const Experience: React.FC = () => {
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6 tracking-tight">Experience</h2>
+      <h2 className="text-2xl font-semibold mb-6 tracking-tight animate-element">Experience</h2>
       
       <div className="space-y-10">
         {experiences.map((exp, index) => (
-          <div key={index} className="border-l border-secondary pl-6 relative">
+          <div key={index} className="border-l border-secondary pl-6 relative animate-element">
             <div className="absolute w-3 h-3 bg-foreground rounded-full -left-[6.5px] top-1.5"></div>
             
             <h3 className="text-xl font-medium tracking-tight">{exp.organization}</h3>
@@ -69,7 +69,7 @@ const Experience: React.FC = () => {
             
             <ul className="mt-4 space-y-2">
               {exp.description.map((item, i) => (
-                <li key={i} className="flex items-start">
+                <li key={i} className="flex items-start animate-element" style={{animationDelay: `${i * 0.1}s`}}>
                   <span className="mr-2">•</span>
                   <span className="tracking-tight">{item}</span>
                 </li>

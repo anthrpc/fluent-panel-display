@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
             href="https://huggingface.co/marcuscedricridia" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200 tracking-tight"
+            className="text-muted-foreground hover:text-foreground transition-colors duration-200 tracking-tight z-10"
           >
             huggingface.co/marcuscedricridia
           </a>
