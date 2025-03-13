@@ -41,6 +41,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-smooth: always;
+    letter-spacing: -0.015em;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    letter-spacing: -0.025em;
   }
 }
 
@@ -50,7 +55,7 @@
   }
   
   .nav-item {
-    @apply relative flex items-center pl-6 text-muted-foreground hover:text-foreground transition-colors duration-200 py-1.5;
+    @apply relative flex items-center pl-6 text-muted-foreground hover:text-foreground transition-colors duration-200 py-1.5 tracking-tight;
   }
   
   .nav-item:before {
@@ -79,10 +84,15 @@
   .text-balance {
     text-wrap: balance;
   }
+  
+  .tracking-tight {
+    letter-spacing: -0.015em;
+  }
 }
 
 .panel {
   opacity: 0;
   transform: translateY(0);
   transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity;
 }

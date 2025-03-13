@@ -6,20 +6,20 @@ const Footer: React.FC = () => {
   const formattedDate = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
   
   return (
-    <footer className="pt-8 pb-4 border-t border-secondary">
+    <footer className="pt-8 pb-6 border-t border-secondary">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div>
           <a 
             href="https://huggingface.co/marcuscedricridia" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+            className="text-muted-foreground hover:text-foreground transition-colors duration-200 tracking-tight"
           >
             huggingface.co/marcuscedricridia
           </a>
         </div>
         
-        <div className="mt-4 md:mt-0 text-muted-foreground">
+        <div className="mt-4 md:mt-0 text-muted-foreground tracking-tight">
           Made with ❤️ | Last updated: {formattedDate}
         </div>
       </div>

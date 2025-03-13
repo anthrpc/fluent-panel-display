@@ -54,7 +54,7 @@ const experiences: ExperienceItem[] = [
 const Experience: React.FC = () => {
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6">Experience</h2>
+      <h2 className="text-2xl font-semibold mb-6 tracking-tight">Experience</h2>
       
       <div className="space-y-10">
         {experiences.map((exp, index) => (
@@ -63,7 +63,7 @@ const Experience: React.FC = () => {
             
             <h3 className="text-xl font-medium tracking-tight">{exp.organization}</h3>
             <div className="flex items-center justify-between mt-1">
-              <p className="text-muted-foreground">{exp.role}</p>
+              <p className="text-muted-foreground tracking-tight">{exp.role}</p>
               <p className="text-sm text-muted-foreground">{exp.period}</p>
             </div>
             
@@ -71,7 +71,7 @@ const Experience: React.FC = () => {
               {exp.description.map((item, i) => (
                 <li key={i} className="flex items-start">
                   <span className="mr-2">•</span>
-                  <span>{item}</span>
+                  <span className="tracking-tight">{item}</span>
                 </li>
               ))}
             </ul>

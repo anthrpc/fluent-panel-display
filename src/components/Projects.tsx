@@ -42,7 +42,7 @@ const projects: Project[] = [
 const Projects: React.FC = () => {
   return (
     <div>
-      <h2 className="text-2xl font-semibold mb-6">Projects</h2>
+      <h2 className="text-2xl font-semibold mb-6 tracking-tight">Projects</h2>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {projects.map((project, index) => (
@@ -65,10 +65,10 @@ const Projects: React.FC = () => {
               <span className="text-sm text-muted-foreground">{project.year}</span>
             </div>
             
-            <p className="text-muted-foreground mb-4">{project.description}</p>
+            <p className="text-muted-foreground mb-4 tracking-tight">{project.description}</p>
             
             <div className="text-sm text-muted-foreground">
-              <span className="text-foreground">Tech: </span>
+              <span className="text-foreground tracking-tight">Tech: </span>
               {project.technologies}
             </div>
           </div>

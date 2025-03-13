@@ -32,7 +32,7 @@ const About: React.FC = () => {
         { width: '0%' },
         { 
           width: width,
-          duration: 2,
+          duration: 1.5,
           ease: "power3.out"
         }
       );
@@ -41,7 +41,7 @@ const About: React.FC = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-semibold mb-4">About</h2>
+      <h2 className="text-2xl font-semibold mb-4 tracking-tight">About</h2>
       
       <p className="text-balance leading-relaxed tracking-tight">
         I'm a passionate developer who works with open-source AI models. My expertise lies in creating, fine-tuning, and implementing machine learning solutions that push the boundaries of what's possible with artificial intelligence.
@@ -52,13 +52,13 @@ const About: React.FC = () => {
       </p>
 
       <div className="mt-8">
-        <h3 className="text-xl font-medium mb-4">Skills</h3>
+        <h3 className="text-xl font-medium mb-4 tracking-tight">Skills</h3>
         
         <div className="space-y-5">
           {skills.map((skill, index) => (
             <div key={index}>
               <div className="flex justify-between mb-1">
-                <span className="font-medium">{skill.name}</span>
+                <span className="font-medium tracking-tight">{skill.name}</span>
                 <span>{skill.percentage}%</span>
               </div>
               <div className="skill-bar">
@@ -74,7 +74,7 @@ const About: React.FC = () => {
       </div>
 
       <div className="mt-6">
-        <h3 className="text-xl font-medium mb-4">My Values</h3>
+        <h3 className="text-xl font-medium mb-4 tracking-tight">My Values</h3>
         <p className="text-balance leading-relaxed mb-4 tracking-tight">
           I care about your experience, not your data. I believe in creating products and experiences that are:
         </p>
@@ -82,23 +82,23 @@ const About: React.FC = () => {
         <ul className="space-y-2">
           <li className="flex items-start">
             <span className="mr-2">•</span>
-            <span>Truly independent with good performance, stability, and security</span>
+            <span className="tracking-tight">Truly independent with good performance, stability, and security</span>
           </li>
           <li className="flex items-start">
             <span className="mr-2">•</span>
-            <span>Organized, compact, and fresh</span>
+            <span className="tracking-tight">Organized, compact, and fresh</span>
           </li>
           <li className="flex items-start">
             <span className="mr-2">•</span>
-            <span>Clean, calm, personalized, and customizable</span>
+            <span className="tracking-tight">Clean, calm, personalized, and customizable</span>
           </li>
           <li className="flex items-start">
             <span className="mr-2">•</span>
-            <span>Private with no third-party integrations</span>
+            <span className="tracking-tight">Private with no third-party integrations</span>
           </li>
           <li className="flex items-start">
             <span className="mr-2">•</span>
-            <span>No bloatware or unnecessary preinstalled applications</span>
+            <span className="tracking-tight">No bloatware or unnecessary preinstalled applications</span>
           </li>
         </ul>
       </div>

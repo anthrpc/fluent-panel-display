@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { gsap } from 'gsap';
 
 interface Greeting {
@@ -24,56 +24,51 @@ const greetings: Greeting[] = [
 
 const MultiLangGreeting: React.FC = () => {
   const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
-  const [greetingElement, setGreetingElement] = useState<HTMLElement | null>(null);
-
+  const greetingRef = useRef<HTMLSpanElement>(null);
+  const containerRef = useRef<HTMLSpanElement>(null);
+  
   useEffect(() => {
-    if (!greetingElement) return;
+    if (!greetingRef.current) return;
     
     let currentIndex = 0;
-    let cycles = 0;
     
-    // Create master timeline
-    const masterTl = gsap.timeline();
-    
-    // Create the accelerating phase - starting slower, getting faster
-    const acceleratingPhase = gsap.timeline();
+    // Create a timeline for the animation sequence
+    const tl = gsap.timeline();
     
     // Function to cycle through greetings
     const cycleGreetings = () => {
       currentIndex = (currentIndex + 1) % greetings.length;
       setCurrentGreeting(greetings[currentIndex]);
-      cycles++;
     };
     
-    // First few transitions are slower (building up)
+    // Accelerating phase - getting faster (ease-in)
     for (let i = 0; i < 5; i++) {
-      const duration = 0.15 - (i * 0.02); // Gradually decreasing duration
-      acceleratingPhase.to(greetingElement, { 
+      const duration = 0.2 - (i * 0.03); // Gradually decreasing duration
+      tl.to(greetingRef.current, { 
         opacity: 0, 
         y: -10, 
         duration: duration,
-        ease: "power1.in",
+        ease: "power2.in", // ease-in for acceleration
         onComplete: cycleGreetings 
       })
-      .to(greetingElement, { 
+      .to(greetingRef.current, { 
         opacity: 1, 
         y: 0, 
         duration: duration,
-        ease: "power1.in"
+        ease: "power2.in"
       });
     }
     
-    // Middle section - fast transitions
-    const middlePhase = gsap.timeline();
-    for (let i = 0; i < 10; i++) {
-      middlePhase.to(greetingElement, { 
+    // Fast phase - maintain speed
+    for (let i = 0; i < 8; i++) {
+      tl.to(greetingRef.current, { 
         opacity: 0, 
         y: -10, 
         duration: 0.05,
         ease: "power1.in",
         onComplete: cycleGreetings 
       })
-      .to(greetingElement, { 
+      .to(greetingRef.current, { 
         opacity: 1, 
         y: 0, 
         duration: 0.05,
@@ -81,65 +76,55 @@ const MultiLangGreeting: React.FC = () => {
       });
     }
     
-    // Final phase - slowing down
-    const deceleratingPhase = gsap.timeline();
+    // Decelerating phase - slowing down (ease-out)
     for (let i = 0; i < 5; i++) {
-      const duration = 0.08 + (i * 0.03); // Gradually increasing duration
-      deceleratingPhase.to(greetingElement, { 
+      const duration = 0.08 + (i * 0.04); // Gradually increasing duration
+      tl.to(greetingRef.current, { 
         opacity: 0, 
         y: -10, 
         duration: duration,
-        ease: "power1.out",
+        ease: "power2.out", // ease-out for deceleration
         onComplete: cycleGreetings 
       })
-      .to(greetingElement, { 
+      .to(greetingRef.current, { 
         opacity: 1, 
         y: 0, 
         duration: duration,
-        ease: "power1.out"
+        ease: "power2.out"
       });
     }
     
-    // Final transition to region's language
-    const finalTransition = gsap.timeline();
-    finalTransition.to(greetingElement, { 
+    // Final transition to English
+    tl.to(greetingRef.current, { 
       opacity: 0, 
       y: -10, 
-      duration: 0.2,
-      ease: "power2.out",
+      duration: 0.3,
+      ease: "power3.out", // Strong ease-out for final transition
       onComplete: () => {
-        // Set to user's region language (for demo, using English)
-        setCurrentGreeting(greetings[0]);
+        setCurrentGreeting(greetings[0]); // Set back to English
       }
     })
-    .to(greetingElement, { 
+    .to(greetingRef.current, { 
       opacity: 1, 
       y: 0, 
-      duration: 0.3,
-      ease: "power2.out" 
+      duration: 0.4,
+      ease: "power3.out"
     });
     
-    // Add all phases to master timeline
-    masterTl
-      .add(acceleratingPhase)
-      .add(middlePhase)
-      .add(deceleratingPhase)
-      .add(finalTransition);
-    
     return () => {
-      masterTl.kill();
+      tl.kill();
     };
-  }, [greetingElement]);
+  }, []);
 
   return (
-    <span className="inline-block overflow-hidden">
+    <span ref={containerRef} className="inline-block whitespace-nowrap">
       <span 
-        ref={(el) => setGreetingElement(el)} 
-        className="inline-block"
+        ref={greetingRef} 
+        className="inline-block min-w-[95px] text-right"
       >
         {currentGreeting.text}
       </span>
-      <span> I'm Marcus.</span>
+      <span className="tracking-tight"> I'm Marcus.</span>
     </span>
   );
 };

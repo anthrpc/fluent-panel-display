@@ -13,23 +13,32 @@ const Index: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
   
   useEffect(() => {
-    // Only animate the panel transitions, not the entire container
+    // Only animate the panel content, not the entire container
     const panels = document.querySelectorAll('.panel');
-    gsap.set(panels, { position: 'absolute', width: '100%' });
+    
+    // First, hide all panels
+    gsap.set(panels, { 
+      opacity: 0,
+      position: 'absolute',
+      width: '100%'
+    });
 
+    // Find the active panel and animate it
     const activePanel = document.querySelector(`.panel[data-section="${activeSection}"]`);
     if (activePanel) {
+      // Animate out all panels
       gsap.to(panels, {
         opacity: 0,
-        duration: 0.4,
-        ease: 'power3.out',
+        duration: 0.3,
+        ease: "power2.out",
       });
       
+      // Animate in the active panel
       gsap.to(activePanel, {
         opacity: 1,
-        duration: 0.6,
-        delay: 0.2,
-        ease: 'power3.out',
+        duration: 0.5,
+        delay: 0.1,
+        ease: "power2.out",
       });
     }
   }, [activeSection]);
@@ -52,22 +61,22 @@ const Index: React.FC = () => {
             <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
           </div>
           
-          {/* Right Column - Content */}
-          <div className="md:col-span-2 relative min-h-[600px]">
-            <div className="relative" style={{ minHeight: '600px' }}>
-              <div className="panel absolute w-full" data-section="about">
+          {/* Right Column - Content Panels */}
+          <div className="md:col-span-2 relative">
+            <div style={{ minHeight: '600px' }}>
+              <div className="panel" data-section="about">
                 <About />
               </div>
               
-              <div className="panel absolute w-full" data-section="experience">
+              <div className="panel" data-section="experience">
                 <Experience />
               </div>
               
-              <div className="panel absolute w-full" data-section="projects">
+              <div className="panel" data-section="projects">
                 <Projects />
               </div>
               
-              <div className="panel absolute w-full" data-section="hire">
+              <div className="panel" data-section="hire">
                 <Hire />
               </div>
             </div>
@@ -75,8 +84,8 @@ const Index: React.FC = () => {
         </div>
       </div>
       
-      {/* Footer - outside of panels, fixed at bottom */}
-      <div className="w-full">
+      {/* Footer - outside of panels container, at the bottom of the page */}
+      <div className="w-full mt-auto">
         <div className="container-custom">
           <Footer />
         </div>
