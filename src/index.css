@@ -55,15 +55,14 @@
   }
   
   .nav-item {
-    @apply relative flex items-center pl-6 text-muted-foreground hover:text-foreground transition-colors duration-200 py-1.5 tracking-tight;
+    @apply relative flex items-center text-muted-foreground hover:text-foreground transition-colors duration-200 py-1.5 tracking-tight;
   }
   
-  .nav-item:before {
-    content: "";
-    @apply absolute left-0 w-2 h-2 rounded-full bg-muted-foreground transform scale-100 transition-transform duration-200;
+  .nav-item .nav-dot {
+    @apply absolute left-0 w-2 h-2 rounded-full bg-muted-foreground transform scale-0 opacity-0 transition-transform duration-200;
   }
   
-  .nav-item:active:before {
+  .nav-item:active .nav-dot {
     @apply scale-150;
   }
   
@@ -71,8 +70,8 @@
     @apply text-foreground;
   }
   
-  .nav-item.active:before {
-    @apply bg-foreground;
+  .nav-item.active .nav-dot {
+    @apply bg-foreground opacity-100 scale-100;
   }
   
   .skill-bar {
@@ -119,10 +118,17 @@
   will-change: transform, opacity;
 }
 
+/* Animation complete state to prevent disappearing */
+.animate-element.gsap-animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Make links and interactive elements more accessible */
-a, button {
+a, button, .link {
   position: relative;
   z-index: 10;
+  will-change: transform;
 }
 
 /* Fixed height container for panels */
@@ -140,6 +146,7 @@ a, button {
 /* Adding this to ensure elements remain visible after animation */
 .panel-content {
   will-change: transform, opacity;
+  min-height: 100%;
 }
 
 /* Apply motion blur during animations */
