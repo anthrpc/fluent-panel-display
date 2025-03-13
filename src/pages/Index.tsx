@@ -24,16 +24,16 @@ const Index: React.FC = () => {
           y: 0, 
           opacity: 1, 
           stagger: 0.1, 
-          duration: 0.5, 
-          ease: "power2.out", 
-          clearProps: "all"
+          duration: 0.5,
+          ease: "power2.out",
+          clearProps: "all" // This ensures properties are cleared after animation
         }
       );
     }
   }, [activeSection]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide">
       <div className="container-custom flex-grow flex flex-col">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
           {/* Left Column - Name and Navigation */}
@@ -72,7 +72,7 @@ const Index: React.FC = () => {
           </div>
         </div>
 
-        {/* Footer - placed outside of the grid and panels */}
+        {/* Footer - placed outside of the grid and content flow */}
         <div className="w-full mt-8">
           <Footer />
         </div>
