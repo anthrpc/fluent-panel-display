@@ -27,63 +27,107 @@ const MultiLangGreeting: React.FC = () => {
   const [greetingElement, setGreetingElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {
-    let currentIndex = 0;
-    const cycleCount = Math.floor(5000 / 100); // 5 seconds total, 0.1s per transition
-    let cycles = 0;
-    let tl = gsap.timeline();
+    if (!greetingElement) return;
     
+    let currentIndex = 0;
+    let cycles = 0;
+    
+    // Create master timeline
+    const masterTl = gsap.timeline();
+    
+    // Create the accelerating phase - starting slower, getting faster
+    const acceleratingPhase = gsap.timeline();
+    
+    // Function to cycle through greetings
     const cycleGreetings = () => {
       currentIndex = (currentIndex + 1) % greetings.length;
       setCurrentGreeting(greetings[currentIndex]);
       cycles++;
-
-      // Stop after 5 seconds (50 cycles at 0.1s each)
-      if (cycles >= cycleCount) {
-        // Set to user's region language (for demo, using English)
-        setCurrentGreeting(greetings[0]);
-        return;
-      }
     };
-
-    if (greetingElement) {
-      // First phase: ease-in for cycling through languages
-      const firstPhaseAnimations = gsap.timeline({ repeat: cycleCount - 2 });
-      firstPhaseAnimations.to(greetingElement, { 
+    
+    // First few transitions are slower (building up)
+    for (let i = 0; i < 5; i++) {
+      const duration = 0.15 - (i * 0.02); // Gradually decreasing duration
+      acceleratingPhase.to(greetingElement, { 
         opacity: 0, 
         y: -10, 
-        duration: 0.05, 
-        ease: "power2.in", // Use ease-in for the first phase
+        duration: duration,
+        ease: "power1.in",
         onComplete: cycleGreetings 
       })
       .to(greetingElement, { 
         opacity: 1, 
         y: 0, 
-        duration: 0.05, 
-        ease: "power2.in" 
+        duration: duration,
+        ease: "power1.in"
       });
-      
-      // Second phase: ease-out for settling on the final language
-      tl.add(firstPhaseAnimations)
-        .to(greetingElement, { 
-          opacity: 0, 
-          y: -10, 
-          duration: 0.05, 
-          ease: "power2.out", // Use ease-out for the final transition
-          onComplete: () => {
-            // Set to user's region language (for demo, using English)
-            setCurrentGreeting(greetings[0]);
-          }
-        })
-        .to(greetingElement, { 
-          opacity: 1, 
-          y: 0, 
-          duration: 0.05, 
-          ease: "power2.out" 
-        });
     }
-
+    
+    // Middle section - fast transitions
+    const middlePhase = gsap.timeline();
+    for (let i = 0; i < 10; i++) {
+      middlePhase.to(greetingElement, { 
+        opacity: 0, 
+        y: -10, 
+        duration: 0.05,
+        ease: "power1.in",
+        onComplete: cycleGreetings 
+      })
+      .to(greetingElement, { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.05,
+        ease: "power1.in"
+      });
+    }
+    
+    // Final phase - slowing down
+    const deceleratingPhase = gsap.timeline();
+    for (let i = 0; i < 5; i++) {
+      const duration = 0.08 + (i * 0.03); // Gradually increasing duration
+      deceleratingPhase.to(greetingElement, { 
+        opacity: 0, 
+        y: -10, 
+        duration: duration,
+        ease: "power1.out",
+        onComplete: cycleGreetings 
+      })
+      .to(greetingElement, { 
+        opacity: 1, 
+        y: 0, 
+        duration: duration,
+        ease: "power1.out"
+      });
+    }
+    
+    // Final transition to region's language
+    const finalTransition = gsap.timeline();
+    finalTransition.to(greetingElement, { 
+      opacity: 0, 
+      y: -10, 
+      duration: 0.2,
+      ease: "power2.out",
+      onComplete: () => {
+        // Set to user's region language (for demo, using English)
+        setCurrentGreeting(greetings[0]);
+      }
+    })
+    .to(greetingElement, { 
+      opacity: 1, 
+      y: 0, 
+      duration: 0.3,
+      ease: "power2.out" 
+    });
+    
+    // Add all phases to master timeline
+    masterTl
+      .add(acceleratingPhase)
+      .add(middlePhase)
+      .add(deceleratingPhase)
+      .add(finalTransition);
+    
     return () => {
-      tl.kill();
+      masterTl.kill();
     };
   }, [greetingElement]);
 

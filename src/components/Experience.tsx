@@ -10,43 +10,43 @@ interface ExperienceItem {
 
 const experiences: ExperienceItem[] = [
   {
-    organization: "Open AI Models Collective",
-    role: "AI Research Contributor",
-    period: "2022 - Present",
+    organization: "Kaleido Singapore",
+    role: "Dataset Specialist",
+    period: "2023 - Present",
     description: [
-      "Contributed to the development of large language models and vision-language models",
-      "Collaborated on model training optimization techniques",
-      "Participated in fine-tuning models for specific downstream tasks"
+      "Curated and preprocessed datasets for computer vision and NLP models",
+      "Developed data cleaning pipelines to ensure high-quality training data",
+      "Implemented data augmentation techniques to improve model robustness"
     ]
   },
   {
-    organization: "HuggingFace",
-    role: "Dataset Curator",
-    period: "2021 - Present",
+    organization: "Newstar Research Asia",
+    role: "AI Model Developer",
+    period: "2022 - 2023",
     description: [
-      "Created and maintained high-quality datasets for training AI models",
-      "Developed data cleaning and preprocessing pipelines",
-      "Collaborated with researchers to design datasets for specific AI tasks"
+      "Developed and optimized custom language models for specific domains",
+      "Fine-tuned pre-trained models for various downstream tasks",
+      "Collaborated with research teams to implement novel architectures"
     ]
   },
   {
-    organization: "Open Source AI Initiative",
-    role: "Lead Developer",
-    period: "2020 - 2022",
+    organization: "Aigle",
+    role: "ML Engineer",
+    period: "2021 - 2022",
     description: [
-      "Led development of open source AI tools and utilities",
-      "Implemented efficient APIs for model inference",
-      "Mentored junior developers in AI programming techniques"
+      "Built and deployed machine learning models for production use",
+      "Optimized inference speed and resource utilization",
+      "Implemented continuous integration for model updates"
     ]
   },
   {
-    organization: "AI Research Lab",
-    role: "Research Assistant",
-    period: "2019 - 2020",
+    organization: "Independent Research",
+    role: "AI Hobbyist & Contributor",
+    period: "2020 - Present",
     description: [
-      "Assisted in conducting experiments with neural network architectures",
-      "Implemented research papers in Python using PyTorch and TensorFlow",
-      "Co-authored publications on machine learning techniques"
+      "Experimented with merging various LLMs and documenting results",
+      "Contributed to Tagalog language models in the 922 Narra project",
+      "Shared findings through technical blogs and community forums"
     ]
   }
 ];
@@ -61,7 +61,7 @@ const Experience: React.FC = () => {
           <div key={index} className="border-l border-secondary pl-6 relative">
             <div className="absolute w-3 h-3 bg-foreground rounded-full -left-[6.5px] top-1.5"></div>
             
-            <h3 className="text-xl font-medium">{exp.organization}</h3>
+            <h3 className="text-xl font-medium tracking-tight">{exp.organization}</h3>
             <div className="flex items-center justify-between mt-1">
               <p className="text-muted-foreground">{exp.role}</p>
               <p className="text-sm text-muted-foreground">{exp.period}</p>

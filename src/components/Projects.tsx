@@ -6,44 +6,36 @@ interface Project {
   description: string;
   technologies: string;
   year: string;
+  link?: string;
 }
 
 const projects: Project[] = [
   {
-    name: "LLM Fine-tuning Framework",
-    description: "A comprehensive framework for fine-tuning large language models with minimal computational resources.",
-    technologies: "Python, PyTorch, Hugging Face Transformers",
-    year: "2023"
+    name: "Atlas Desktop Partner",
+    description: "A local LLM assistant that runs entirely on your computer, providing ChatGPT-like capabilities but with faster response times and complete privacy.",
+    technologies: "Python, C++, GGML, React",
+    year: "2023",
+    link: "https://atlasbonfire.netlify.app"
   },
   {
-    name: "Dataset Curation Tool",
-    description: "An end-to-end solution for creating, cleaning, and preparing datasets for AI training.",
-    technologies: "Python, JavaScript, MongoDB",
+    name: "Digital Guardian",
+    description: "A parental control application that monitors children's desktop activity through periodic screenshots, helping parents ensure online safety.",
+    technologies: "Python, PyQt, OpenCV, PyInstaller",
     year: "2022"
   },
   {
-    name: "Vision-Language Model Explorer",
-    description: "An interactive web application to test and explore the capabilities of various vision-language models.",
-    technologies: "React, Python, FastAPI",
-    year: "2022"
+    name: "Letterbox",
+    description: "A web application that enables users to send anonymous messages to specific recipients, providing a platform for honest communication without revealing identity.",
+    technologies: "Python, Flask, SQLite, Bootstrap",
+    year: "2022",
+    link: "https://saintlike.pythonanywhere.com/"
   },
   {
-    name: "Diffusion Model Interface",
-    description: "A user-friendly interface for generating images using stable diffusion models.",
-    technologies: "Rust, JavaScript, WebAssembly",
-    year: "2021"
-  },
-  {
-    name: "Embedding Visualization Tool",
-    description: "A tool to visualize high-dimensional embeddings from language models.",
-    technologies: "Python, JavaScript, WebGL",
-    year: "2021"
-  },
-  {
-    name: "AI Model Serving Framework",
-    description: "A lightweight framework for serving AI models in production environments.",
-    technologies: "Python, Rust, Docker",
-    year: "2020"
+    name: "ParrotGrabber",
+    description: "A web tool that simplifies batch downloading files from Hugging Face Hub. It allows users to specify repositories and select specific files or file extensions for download in one go.",
+    technologies: "Python, Flask, Selenium, Hugging Face Hub API",
+    year: "2022",
+    link: "https://github.com/anthrpc/ParrotGrabber"
   }
 ];
 
@@ -56,7 +48,20 @@ const Projects: React.FC = () => {
         {projects.map((project, index) => (
           <div key={index} className="border border-secondary rounded-lg p-5 hover:border-muted-foreground transition-colors duration-300">
             <div className="flex justify-between items-start mb-3">
-              <h3 className="text-xl font-medium">{project.name}</h3>
+              <h3 className="text-xl font-medium tracking-tight">
+                {project.link ? (
+                  <a 
+                    href={project.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors"
+                  >
+                    {project.name}
+                  </a>
+                ) : (
+                  project.name
+                )}
+              </h3>
               <span className="text-sm text-muted-foreground">{project.year}</span>
             </div>
             

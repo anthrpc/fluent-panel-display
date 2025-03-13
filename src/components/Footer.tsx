@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
   const formattedDate = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
   
   return (
-    <footer className="mt-16 pt-8 border-t border-secondary">
+    <footer className="pt-8 pb-4 border-t border-secondary">
       <div className="flex flex-col md:flex-row justify-between items-center">
         <div>
           <a 

@@ -13,18 +13,7 @@ const Index: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
   
   useEffect(() => {
-    // Initialize GSAP animations
-    gsap.registerPlugin();
-    
-    // Animate the main content appearance
-    gsap.from('.container-custom', {
-      opacity: 0,
-      y: 20,
-      duration: 0.8,
-      ease: 'power3.out',
-    });
-
-    // Handle panel transitions
+    // Only animate the panel transitions, not the entire container
     const panels = document.querySelectorAll('.panel');
     gsap.set(panels, { position: 'absolute', width: '100%' });
 
@@ -32,27 +21,27 @@ const Index: React.FC = () => {
     if (activePanel) {
       gsap.to(panels, {
         opacity: 0,
-        duration: 0.3,
-        ease: 'power2.inOut',
+        duration: 0.4,
+        ease: 'power3.out',
       });
       
       gsap.to(activePanel, {
         opacity: 1,
-        duration: 0.5,
+        duration: 0.6,
         delay: 0.2,
-        ease: 'power2.out',
+        ease: 'power3.out',
       });
     }
   }, [activeSection]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans">
-      <div className="container-custom">
+    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col">
+      <div className="container-custom flex-grow">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           {/* Left Column - Name and Navigation */}
           <div className="md:col-span-1">
             <div>
-              <h1 className="text-4xl font-bold leading-tight">
+              <h1 className="text-4xl font-bold leading-tight tracking-tight">
                 <MultiLangGreeting />
               </h1>
               <p className="mt-4 text-muted-foreground">
@@ -64,8 +53,8 @@ const Index: React.FC = () => {
           </div>
           
           {/* Right Column - Content */}
-          <div className="md:col-span-2 relative min-h-[600px] flex flex-col">
-            <div className="flex-grow relative">
+          <div className="md:col-span-2 relative min-h-[600px]">
+            <div className="relative" style={{ minHeight: '600px' }}>
               <div className="panel absolute w-full" data-section="about">
                 <About />
               </div>
@@ -82,9 +71,14 @@ const Index: React.FC = () => {
                 <Hire />
               </div>
             </div>
-            
-            <Footer />
           </div>
+        </div>
+      </div>
+      
+      {/* Footer - outside of panels, fixed at bottom */}
+      <div className="w-full">
+        <div className="container-custom">
+          <Footer />
         </div>
       </div>
     </div>
