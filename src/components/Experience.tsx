@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Calendar, Briefcase, Code } from 'lucide-react';
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 
 interface ExperienceItem {
   organization: string;
@@ -101,18 +100,12 @@ const Experience: React.FC = () => {
                 
                 <div className="flex flex-wrap gap-2">
                   {exp.tech.map((tech, i) => (
-                    <HoverCard key={i}>
-                      <HoverCardTrigger asChild>
-                        <span 
-                          className="px-3 py-1 rounded-full bg-secondary text-xs text-muted-foreground cursor-pointer transition-colors duration-200 hover:bg-secondary/80 hover:text-foreground"
-                        >
-                          {tech}
-                        </span>
-                      </HoverCardTrigger>
-                      <HoverCardContent className="w-auto p-3">
-                        <p className="text-xs">Used {tech} for AI development</p>
-                      </HoverCardContent>
-                    </HoverCard>
+                    <span 
+                      key={i}
+                      className="px-3 py-1 rounded-full bg-secondary text-xs text-muted-foreground cursor-pointer transition-colors duration-200 hover:bg-secondary/80 hover:text-foreground"
+                    >
+                      {tech}
+                    </span>
                   ))}
                 </div>
               </div>

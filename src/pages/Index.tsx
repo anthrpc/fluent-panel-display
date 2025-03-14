@@ -16,6 +16,7 @@ const Index: React.FC = () => {
   const contentPanelRef = useRef<HTMLDivElement>(null);
   const cursorGlowRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const panelScrollRef = useRef<HTMLDivElement>(null);
   
   // For cursor glow effect
   useEffect(() => {
@@ -130,32 +131,46 @@ const Index: React.FC = () => {
             
             {/* Right Column - Content Panels with Locomotive Scroll */}
             <div className="md:col-span-2 relative">
-              <div 
-                ref={contentPanelRef}
-                className="panel-container h-[600px] overflow-y-auto scrollbar-hide relative pb-6"
-                data-scroll
+              <LocomotiveScrollProvider
+                options={{
+                  smooth: true,
+                  smartphone: {
+                    smooth: true
+                  },
+                  tablet: {
+                    smooth: true
+                  }
+                }}
+                containerRef={panelScrollRef}
               >
                 <div 
-                  data-scroll-container 
-                  className="h-full w-full"
+                  ref={panelScrollRef}
+                  className="panel-container h-[600px] overflow-y-auto scrollbar-hide relative pb-6"
+                  data-scroll-container
                 >
-                  <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
-                    <About />
-                  </div>
-                  
-                  <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
-                    <Experience />
-                  </div>
-                  
-                  <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
-                    <Projects />
-                  </div>
-                  
-                  <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
-                    <Hire />
+                  <div 
+                    ref={contentPanelRef}
+                    data-scroll
+                    className="h-full w-full"
+                  >
+                    <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
+                      <About />
+                    </div>
+                    
+                    <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
+                      <Experience />
+                    </div>
+                    
+                    <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
+                      <Projects />
+                    </div>
+                    
+                    <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
+                      <Hire />
+                    </div>
                   </div>
                 </div>
-              </div>
+              </LocomotiveScrollProvider>
             </div>
           </div>
 

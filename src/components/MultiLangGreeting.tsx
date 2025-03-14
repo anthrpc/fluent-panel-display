@@ -20,6 +20,8 @@ const greetings: Greeting[] = [
   { language: 'Russian', text: 'Привет!' },
   { language: 'Arabic', text: 'مرحبا!' },
   { language: 'Hindi', text: 'नमस्ते!' },
+  { language: 'Filipino', text: 'Kumusta!' },
+  { language: 'Swedish', text: 'Hej!' },
 ];
 
 const MultiLangGreeting: React.FC = () => {
