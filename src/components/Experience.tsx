@@ -53,7 +53,7 @@ const experiences: ExperienceItem[] = [
 
 const Experience: React.FC = () => {
   return (
-    <div>
+    <div className="w-full">
       <h2 className="text-2xl font-semibold mb-6 tracking-tight animate-element">Experience</h2>
       
       <div className="space-y-10">

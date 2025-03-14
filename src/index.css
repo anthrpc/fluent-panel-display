@@ -1,5 +1,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+@import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 @tailwind base;
 @tailwind components;
@@ -154,4 +155,20 @@ a, button, .link {
 
 .slide-in {
   animation: slideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+}
+
+/* Locomotive scroll styles */
+html.has-scroll-smooth {
+  overflow: hidden;
+}
+
+html.has-scroll-dragging {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.has-scroll-smooth body {
+  overflow: hidden;
 }

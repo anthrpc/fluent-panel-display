@@ -8,11 +8,13 @@ import Experience from '../components/Experience';
 import Projects from '../components/Projects';
 import Hire from '../components/Hire';
 import Footer from '../components/Footer';
+import { LocomotiveScrollProvider } from 'react-locomotive-scroll';
 
 const Index: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
   const contentPanelRef = useRef<HTMLDivElement>(null);
   const cursorGlowRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
   // For cursor glow effect
   useEffect(() => {
@@ -55,7 +57,6 @@ const Index: React.FC = () => {
           stagger: 0.1, 
           duration: 0.5,
           ease: "power2.out",
-          clearProps: "", // Don't clear any properties after animation
           onComplete: () => {
             // Mark elements as animated
             elements.forEach(el => {
@@ -64,67 +65,101 @@ const Index: React.FC = () => {
           }
         }
       );
+      
+      // Trigger skill bar animation when About section is active
+      if (activeSection === 'about') {
+        const skillBars = activePanel.querySelectorAll('.skill-progress');
+        skillBars.forEach((bar: Element) => {
+          const width = (bar as HTMLElement).getAttribute('data-width') || '0';
+          gsap.fromTo(bar, 
+            { width: '0%' }, 
+            { 
+              width: width, 
+              duration: 1.5,
+              ease: "power3.out"
+            }
+          );
+        });
+      }
     }
   }, [activeSection]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-hidden">
-      {/* Cursor glow effect */}
+    <LocomotiveScrollProvider
+      options={{
+        smooth: true,
+        smartphone: {
+          smooth: true
+        },
+        tablet: {
+          smooth: true
+        }
+      }}
+      containerRef={containerRef}
+    >
       <div 
-        ref={cursorGlowRef}
-        className="pointer-events-none fixed w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
-        style={{ 
-          background: 'radial-gradient(circle, rgba(155,135,245,0.6) 0%, rgba(155,135,245,0) 70%)',
-        }}
-      ></div>
-      
-      <div className="container-custom flex-grow flex flex-col relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
-          {/* Left Column - Name and Navigation */}
-          <div className="md:col-span-1">
-            <div>
-              <h1 className="text-4xl font-bold leading-tight tracking-tight">
-                <MultiLangGreeting />
-              </h1>
-              <p className="mt-4 text-muted-foreground">
-                Open Source AI Model Developer
-              </p>
+        ref={containerRef}
+        className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-hidden"
+        data-scroll-container
+      >
+        {/* Cursor glow effect */}
+        <div 
+          ref={cursorGlowRef}
+          className="pointer-events-none fixed w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
+          style={{ 
+            background: 'radial-gradient(circle, rgba(155,135,245,0.6) 0%, rgba(155,135,245,0) 70%)',
+          }}
+        ></div>
+        
+        <div className="container-custom flex-grow flex flex-col relative z-10">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
+            {/* Left Column - Name and Navigation */}
+            <div className="md:col-span-1">
+              <div>
+                <h1 className="text-4xl font-bold leading-tight tracking-tight">
+                  <MultiLangGreeting />
+                </h1>
+                <p className="mt-4 text-muted-foreground">
+                  Open Source AI Model Developer
+                </p>
+              </div>
+              
+              <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
             </div>
             
-            <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
-          </div>
-          
-          {/* Right Column - Content Panels */}
-          <div className="md:col-span-2 relative">
-            <div 
-              ref={contentPanelRef}
-              className="panel-container h-[600px] overflow-y-auto scrollbar-hide relative pb-6"
-            >
-              <div className="panel-content" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
-                <About />
-              </div>
-              
-              <div className="panel-content" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
-                <Experience />
-              </div>
-              
-              <div className="panel-content" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
-                <Projects />
-              </div>
-              
-              <div className="panel-content" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
-                <Hire />
+            {/* Right Column - Content Panels */}
+            <div className="md:col-span-2 relative">
+              <div 
+                ref={contentPanelRef}
+                className="panel-container h-[600px] overflow-y-auto scrollbar-hide relative pb-6"
+                data-scroll
+              >
+                <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
+                  <About />
+                </div>
+                
+                <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
+                  <Experience />
+                </div>
+                
+                <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
+                  <Projects />
+                </div>
+                
+                <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
+                  <Hire />
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* Footer - placed outside of the content flow */}
-        <div className="w-full mt-12 pt-6 border-t border-secondary">
-          <Footer />
+          {/* Footer - placed outside of the content flow */}
+          <div className="w-full mt-12 pt-6 border-t border-secondary">
+            <Footer />
+          </div>
         </div>
       </div>
-    </div>
+    </LocomotiveScrollProvider>
   );
 };
 
