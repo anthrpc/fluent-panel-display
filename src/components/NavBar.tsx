@@ -30,9 +30,13 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, setActiveSection }) => {
       element.addEventListener('mousemove', handleMouseMove);
       element.addEventListener('mouseleave', handleMouseLeave);
       
-      // Show and animate the dot
+      // Show and animate the dot on hover
       const dot = element.querySelector('.nav-dot') as HTMLElement;
       if (dot && !element.classList.contains('active')) {
+        // Clear any existing animations
+        gsap.killTweensOf(dot);
+        
+        // Animate the dot appearance
         gsap.fromTo(dot, 
           { scale: 0, opacity: 0 },
           { scale: 1, opacity: 1, duration: 0.3, ease: "elastic.out(1.2, 0.5)" }
@@ -80,7 +84,16 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, setActiveSection }) => {
       // Hide the dot with animation if not active
       const dot = element.querySelector('.nav-dot') as HTMLElement;
       if (dot && !element.classList.contains('active')) {
-        gsap.to(dot, { scale: 0, opacity: 0, duration: 0.3 });
+        // Clear any existing animations
+        gsap.killTweensOf(dot);
+        
+        // Animate the dot disappearance
+        gsap.to(dot, { 
+          scale: 0, 
+          opacity: 0, 
+          duration: 0.3,
+          ease: "power2.in" 
+        });
       }
       
       // Animate back to original position with elastic effect

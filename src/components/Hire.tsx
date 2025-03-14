@@ -44,7 +44,7 @@ const Hire: React.FC = () => {
           className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all duration-200"
         >
           <Mail size={18} />
-          contact@marcusridia.com
+          Get in Touch
         </a>
       </div>
     </div>
