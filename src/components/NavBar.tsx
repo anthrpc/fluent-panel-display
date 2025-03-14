@@ -77,7 +77,7 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, setActiveSection }) => {
       element.removeEventListener('mousemove', handleMouseMove);
       element.removeEventListener('mouseleave', handleMouseLeave);
       
-      // Hide the dot with animation
+      // Hide the dot with animation if not active
       const dot = element.querySelector('.nav-dot') as HTMLElement;
       if (dot && !element.classList.contains('active')) {
         gsap.to(dot, { scale: 0, opacity: 0, duration: 0.3 });

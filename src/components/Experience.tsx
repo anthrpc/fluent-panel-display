@@ -56,9 +56,9 @@ const Experience: React.FC = () => {
     <div className="w-full">
       <h2 className="text-2xl font-semibold mb-6 tracking-tight animate-element">Experience</h2>
       
-      <div className="space-y-10">
+      <div className="space-y-10 w-full">
         {experiences.map((exp, index) => (
-          <div key={index} className="border-l border-secondary pl-6 relative animate-element">
+          <div key={index} className="border-l border-secondary pl-6 relative animate-element w-full">
             <div className="absolute w-3 h-3 bg-foreground rounded-full -left-[6.5px] top-1.5"></div>
             
             <h3 className="text-xl font-medium tracking-tight">{exp.organization}</h3>

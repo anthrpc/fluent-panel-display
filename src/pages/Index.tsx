@@ -9,6 +9,7 @@ import Projects from '../components/Projects';
 import Hire from '../components/Hire';
 import Footer from '../components/Footer';
 import { LocomotiveScrollProvider } from 'react-locomotive-scroll';
+import { ScrollArea } from '../components/ui/scroll-area';
 
 const Index: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
@@ -102,7 +103,7 @@ const Index: React.FC = () => {
         className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-hidden"
         data-scroll-container
       >
-        {/* Cursor glow effect */}
+        {/* Cursor glow effect - positioned at the very back with lower z-index */}
         <div 
           ref={cursorGlowRef}
           className="pointer-events-none fixed w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
@@ -127,27 +128,32 @@ const Index: React.FC = () => {
               <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
             </div>
             
-            {/* Right Column - Content Panels */}
+            {/* Right Column - Content Panels with Locomotive Scroll */}
             <div className="md:col-span-2 relative">
               <div 
                 ref={contentPanelRef}
                 className="panel-container h-[600px] overflow-y-auto scrollbar-hide relative pb-6"
                 data-scroll
               >
-                <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
-                  <About />
-                </div>
-                
-                <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
-                  <Experience />
-                </div>
-                
-                <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
-                  <Projects />
-                </div>
-                
-                <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
-                  <Hire />
+                <div 
+                  data-scroll-container 
+                  className="h-full w-full"
+                >
+                  <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
+                    <About />
+                  </div>
+                  
+                  <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
+                    <Experience />
+                  </div>
+                  
+                  <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
+                    <Projects />
+                  </div>
+                  
+                  <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
+                    <Hire />
+                  </div>
                 </div>
               </div>
             </div>

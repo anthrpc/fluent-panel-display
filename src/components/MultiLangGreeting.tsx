@@ -116,14 +116,14 @@ const MultiLangGreeting: React.FC = () => {
   }, []);
 
   return (
-    <div className="flex items-center">
+    <div className="flex flex-col">
       <span 
         ref={greetingRef} 
-        className="inline-block min-w-[95px] text-right"
+        className="inline-block mb-1"
       >
         {currentGreeting.text}
       </span>
-      <span className="tracking-tight ml-2 static">I'm Marcus.</span>
+      <span className="tracking-tight">I'm Marcus.</span>
     </div>
   );
 };

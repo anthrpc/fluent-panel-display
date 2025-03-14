@@ -4,7 +4,7 @@ import { Mail } from 'lucide-react';
 
 const Hire: React.FC = () => {
   return (
-    <div className="space-y-6 pb-10">
+    <div className="space-y-6 pb-10 w-full">
       <h2 className="text-2xl font-semibold mb-4 animate-element slide-in">Hire Me!</h2>
       
       <p className="text-balance leading-relaxed animate-element slide-in">
@@ -44,7 +44,7 @@ const Hire: React.FC = () => {
           className="inline-flex items-center gap-2 bg-foreground text-background px-6 py-3 rounded-md font-medium hover:bg-opacity-90 transition-all duration-200"
         >
           <Mail size={18} />
-          Get in Touch
+          contact@marcusridia.com
         </a>
       </div>
     </div>
