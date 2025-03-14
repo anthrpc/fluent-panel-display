@@ -32,10 +32,10 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, setActiveSection }) => {
       
       // Show and animate the dot
       const dot = element.querySelector('.nav-dot') as HTMLElement;
-      if (dot) {
+      if (dot && !element.classList.contains('active')) {
         gsap.fromTo(dot, 
           { scale: 0, opacity: 0 },
-          { scale: 1, opacity: 1, duration: 0.3, ease: "back.out(2)" }
+          { scale: 1, opacity: 1, duration: 0.3, ease: "elastic.out(1.2, 0.5)" }
         );
       }
     };
@@ -137,7 +137,8 @@ const NavBar: React.FC<NavBarProps> = ({ activeSection, setActiveSection }) => {
               onClick={() => handleNavClick(item.id)}
               data-section={item.id}
             >
-              <span className="nav-dot absolute left-0 w-2 h-2 rounded-full bg-muted-foreground transform" 
+              <span 
+                className="nav-dot absolute left-0 w-2 h-2 rounded-full bg-muted-foreground transform" 
                 style={{ 
                   opacity: activeSection === item.id ? 1 : 0,
                   transform: activeSection === item.id ? 'scale(1)' : 'scale(0)' 

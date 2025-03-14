@@ -25,7 +25,6 @@ const greetings: Greeting[] = [
 const MultiLangGreeting: React.FC = () => {
   const [currentGreeting, setCurrentGreeting] = useState(greetings[0]);
   const greetingRef = useRef<HTMLSpanElement>(null);
-  const containerRef = useRef<HTMLSpanElement>(null);
   
   useEffect(() => {
     if (!greetingRef.current) return;
@@ -117,15 +116,15 @@ const MultiLangGreeting: React.FC = () => {
   }, []);
 
   return (
-    <span ref={containerRef} className="inline-block whitespace-nowrap">
+    <div className="flex items-center">
       <span 
         ref={greetingRef} 
         className="inline-block min-w-[95px] text-right"
       >
         {currentGreeting.text}
       </span>
-      <span className="tracking-tight"> I'm Marcus.</span>
-    </span>
+      <span className="tracking-tight ml-2 static">I'm Marcus.</span>
+    </div>
   );
 };
 

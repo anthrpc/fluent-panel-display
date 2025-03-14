@@ -8,35 +8,46 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  { name: "Python", percentage: 40 },
-  { name: "JavaScript", percentage: 30 },
-  { name: "Rust", percentage: 20 },
-  { name: "Zig", percentage: 10 }
+  { name: "Python", percentage: 100 },
+  { name: "JavaScript", percentage: 40 },
+  { name: "Rust", percentage: 10 },
+  { name: "Zig", percentage: 5 }
 ];
-
-// Validation to ensure percentages add up to 100
-const totalPercentage = skills.reduce((sum, skill) => sum + skill.percentage, 0);
-if (totalPercentage !== 100) {
-  console.error(`Skill percentages must add up to 100. Current total: ${totalPercentage}`);
-}
 
 const About: React.FC = () => {
   const skillBarsRef = useRef<HTMLDivElement[]>([]);
 
   useEffect(() => {
+    // Reset the bars to 0 width before animating them
     skillBarsRef.current.forEach((bar) => {
-      const width = bar.getAttribute('data-width') || '0';
-      
-      // Smoother animation with easing
-      gsap.fromTo(bar,
-        { width: '0%' },
-        { 
-          width: width,
-          duration: 1.5,
-          ease: "power3.out"
-        }
-      );
+      gsap.set(bar, { width: '0%' });
     });
+    
+    // Animate skill bars whenever the component mounts or becomes visible
+    const animateSkillBars = () => {
+      skillBarsRef.current.forEach((bar) => {
+        const width = bar.getAttribute('data-width') || '0';
+        
+        gsap.fromTo(bar,
+          { width: '0%' },
+          { 
+            width: width,
+            duration: 1.5,
+            ease: "power3.out"
+          }
+        );
+      });
+    };
+    
+    // Run animation
+    animateSkillBars();
+    
+    return () => {
+      // Cleanup animation when component unmounts
+      skillBarsRef.current.forEach((bar) => {
+        gsap.killTweensOf(bar);
+      });
+    };
   }, []);
 
   return (
@@ -71,6 +82,10 @@ const About: React.FC = () => {
             </div>
           ))}
         </div>
+        
+        <p className="text-sm text-muted-foreground mt-4 italic">
+          Note: These percentages reflect how frequently I use these languages in my work, not necessarily mastery level.
+        </p>
       </div>
 
       <div className="mt-6 animate-element">

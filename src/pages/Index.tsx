@@ -12,6 +12,28 @@ import Footer from '../components/Footer';
 const Index: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
   const contentPanelRef = useRef<HTMLDivElement>(null);
+  const cursorGlowRef = useRef<HTMLDivElement>(null);
+  
+  // For cursor glow effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (cursorGlowRef.current) {
+        // Apply a slight delay for a smoother effect
+        gsap.to(cursorGlowRef.current, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.5,
+          ease: "power2.out"
+        });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
   
   useEffect(() => {
     // Find the active panel and animate its contents
@@ -25,12 +47,6 @@ const Index: React.FC = () => {
       // Animate in each child element of the active panel
       const elements = activePanel.querySelectorAll('.animate-element');
       
-      // Apply motion blur during animation
-      elements.forEach(el => {
-        el.classList.add('motion-blur');
-        el.classList.add('motion-blur-animate');
-      });
-      
       gsap.fromTo(elements, 
         { y: 20, opacity: 0 },
         { 
@@ -39,13 +55,11 @@ const Index: React.FC = () => {
           stagger: 0.1, 
           duration: 0.5,
           ease: "power2.out",
+          clearProps: "", // Don't clear any properties after animation
           onComplete: () => {
-            // Remove motion blur after animation completes
+            // Mark elements as animated
             elements.forEach(el => {
-              el.classList.remove('motion-blur-animate');
-              setTimeout(() => {
-                el.classList.remove('motion-blur');
-              }, 150);
+              el.classList.add('gsap-animated');
             });
           }
         }
@@ -54,8 +68,17 @@ const Index: React.FC = () => {
   }, [activeSection]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide">
-      <div className="container-custom flex-grow flex flex-col">
+    <div className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-hidden">
+      {/* Cursor glow effect */}
+      <div 
+        ref={cursorGlowRef}
+        className="pointer-events-none fixed w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(155,135,245,0.6) 0%, rgba(155,135,245,0) 70%)',
+        }}
+      ></div>
+      
+      <div className="container-custom flex-grow flex flex-col relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
           {/* Left Column - Name and Navigation */}
           <div className="md:col-span-1">
@@ -75,21 +98,21 @@ const Index: React.FC = () => {
           <div className="md:col-span-2 relative">
             <div 
               ref={contentPanelRef}
-              className="panel-container h-[600px] overflow-y-auto scrollbar-hide relative"
+              className="panel-container h-[600px] overflow-y-auto scrollbar-hide relative pb-6"
             >
-              <div className="panel-content pb-10" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
+              <div className="panel-content" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
                 <About />
               </div>
               
-              <div className="panel-content pb-10" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
+              <div className="panel-content" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
                 <Experience />
               </div>
               
-              <div className="panel-content pb-10" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
+              <div className="panel-content" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
                 <Projects />
               </div>
               
-              <div className="panel-content pb-10" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
+              <div className="panel-content" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
                 <Hire />
               </div>
             </div>
