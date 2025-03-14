@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Calendar, Briefcase, Code } from 'lucide-react';
 
@@ -59,12 +58,12 @@ const experiences: ExperienceItem[] = [
 
 const Experience: React.FC = () => {
   return (
-    <div className="w-full">
+    <div className="w-full px-6 md:px-12 lg:px-16">
       <h2 className="text-2xl font-semibold mb-8 tracking-tight animate-element">Experience</h2>
       
       <div className="space-y-12 w-full">
         {experiences.map((exp, index) => (
-          <div key={index} className="bg-secondary/20 rounded-lg p-6 hover:bg-secondary/30 transition-colors duration-200 animate-element w-full">
+          <div key={index} className="bg-secondary/20 rounded-lg p-6 md:p-8 lg:p-10 hover:bg-secondary/30 transition-colors duration-200 animate-element w-full">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4">
               <div>
                 <h3 className="text-xl font-medium tracking-tight">{exp.organization}</h3>
