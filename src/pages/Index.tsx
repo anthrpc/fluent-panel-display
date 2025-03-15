@@ -121,48 +121,28 @@ const Index: React.FC = () => {
             <ScrollArea className="h-full w-full">
               <div 
                 ref={rightPanelRef}
-                className="pr-4"
+                className="pr-4 h-fit" // Added h-fit to ensure the container only takes the height of its content
               >
-                <LocomotiveScrollProvider
-                  options={{
-                    smooth: true,
-                    smartphone: {
-                      smooth: true
-                    },
-                    tablet: {
-                      smooth: true
-                    }
-                  }}
-                  containerRef={panelScrollRef}
+                <div 
+                  ref={contentPanelRef}
+                  className="w-full"
                 >
-                  <div 
-                    ref={panelScrollRef}
-                    className="panel-container relative pb-6"
-                    data-scroll-container
-                  >
-                    <div 
-                      ref={contentPanelRef}
-                      data-scroll
-                      className="w-full"
-                    >
-                      <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
-                        <About />
-                      </div>
-                      
-                      <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
-                        <Experience />
-                      </div>
-                      
-                      <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
-                        <Projects />
-                      </div>
-                      
-                      <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
-                        <Hire />
-                      </div>
-                    </div>
+                  <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
+                    <About />
                   </div>
-                </LocomotiveScrollProvider>
+                  
+                  <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
+                    <Experience />
+                  </div>
+                  
+                  <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
+                    <Projects />
+                  </div>
+                  
+                  <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
+                    <Hire />
+                  </div>
+                </div>
               </div>
             </ScrollArea>
           </div>
