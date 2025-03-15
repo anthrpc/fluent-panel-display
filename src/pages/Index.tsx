@@ -116,30 +116,16 @@ const Index: React.FC = () => {
             <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
           </div>
           
-          {/* Right Column - Content Panels with locomotive scrolling */}
+          {/* Right Column - Content Panels with independent scrolling */}
           <div className="md:col-span-2 relative h-[calc(100vh-8rem)]">
-            <LocomotiveScrollProvider
-              options={{
-                smooth: true,
-                lerp: 0.1,
-                smartphone: {
-                  smooth: true
-                },
-                tablet: {
-                  smooth: true
-                }
-              }}
-              containerRef={rightPanelRef}
-            >
+            <ScrollArea className="h-full w-full">
               <div 
                 ref={rightPanelRef}
-                className="h-full overflow-hidden"
-                data-scroll-container
+                className="pr-4 h-fit" // Added h-fit to ensure the container only takes the height of its content
               >
                 <div 
                   ref={contentPanelRef}
-                  className="w-full h-fit pr-4"
-                  data-scroll-section
+                  className="w-full"
                 >
                   <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
                     <About />
@@ -158,7 +144,7 @@ const Index: React.FC = () => {
                   </div>
                 </div>
               </div>
-            </LocomotiveScrollProvider>
+            </ScrollArea>
           </div>
         </div>
 
