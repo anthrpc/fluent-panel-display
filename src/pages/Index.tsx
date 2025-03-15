@@ -88,83 +88,72 @@ const Index: React.FC = () => {
   }, [activeSection]);
 
   return (
-    <LocomotiveScrollProvider
-      options={{
-        smooth: true,
-        multiplier: 1,
-        smartphone: { smooth: true },
-        tablet: { smooth: true }
-      }}
-      containerRef={containerRef}
+    <div 
+      className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-hidden"
     >
+      {/* Cursor glow effect - positioned at the very back with lower z-index */}
       <div 
-        ref={containerRef}
-        className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-hidden"
-        data-scroll-container
-      >
-        {/* Cursor glow effect - positioned at the very back with lower z-index */}
-        <div 
-          ref={cursorGlowRef}
-          className="pointer-events-none fixed w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
-          style={{ 
-            background: 'radial-gradient(circle, rgba(155,135,245,0.6) 0%, rgba(155,135,245,0) 70%)',
-          }}
-        ></div>
-        
-        <div className="container-custom flex-grow flex flex-col relative z-10" data-scroll-section>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
-            {/* Left Column - Name and Navigation */}
-            <div className="md:col-span-1 h-full flex flex-col" data-scroll data-scroll-speed="0.3">
-              <div>
-                <h1 className="text-4xl font-bold leading-tight tracking-tight">
-                  <MultiLangGreeting />
-                </h1>
-                <p className="mt-4 text-muted-foreground">
-                  Open Source AI Model Developer
-                </p>
-              </div>
-              
-              <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
+        ref={cursorGlowRef}
+        className="pointer-events-none fixed w-64 h-64 rounded-full bg-purple-500 opacity-10 blur-3xl -translate-x-1/2 -translate-y-1/2 z-0"
+        style={{ 
+          background: 'radial-gradient(circle, rgba(155,135,245,0.6) 0%, rgba(155,135,245,0) 70%)',
+        }}
+      ></div>
+      
+      <div className="container-custom flex-grow flex flex-col relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
+          {/* Left Column - Name and Navigation */}
+          <div className="md:col-span-1 h-full flex flex-col">
+            <div>
+              <h1 className="text-4xl font-bold leading-tight tracking-tight">
+                <MultiLangGreeting />
+              </h1>
+              <p className="mt-4 text-muted-foreground">
+                Open Source AI Model Developer
+              </p>
             </div>
             
-            {/* Right Column - Content Panels with locomotive scrolling */}
-            <div className="md:col-span-2 relative h-[calc(100vh-8rem)]" data-scroll data-scroll-speed="0.1">
+            <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
+          </div>
+          
+          {/* Right Column - Content Panels with independent scrolling */}
+          <div className="md:col-span-2 relative h-[calc(100vh-8rem)]">
+            <ScrollArea className="h-full w-full">
               <div 
                 ref={rightPanelRef}
-                className="pr-4 h-fit" 
-                data-scroll-section
+                className="pr-4 h-fit" // Added h-fit to ensure the container only takes the height of its content
               >
                 <div 
                   ref={contentPanelRef}
                   className="w-full"
                 >
-                  <div className="panel-content w-full" data-section="about" data-scroll style={{display: activeSection === 'about' ? 'block' : 'none'}}>
+                  <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
                     <About />
                   </div>
                   
-                  <div className="panel-content w-full" data-section="experience" data-scroll style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
+                  <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
                     <Experience />
                   </div>
                   
-                  <div className="panel-content w-full" data-section="projects" data-scroll style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
+                  <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
                     <Projects />
                   </div>
                   
-                  <div className="panel-content w-full" data-section="hire" data-scroll style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
+                  <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
                     <Hire />
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Footer - placed outside of the content flow */}
-          <div className="w-full mt-12 pt-6 border-t border-secondary" data-scroll data-scroll-speed="0.1">
-            <Footer />
+            </ScrollArea>
           </div>
         </div>
+
+        {/* Footer - placed outside of the content flow */}
+        <div className="w-full mt-12 pt-6 border-t border-secondary">
+          <Footer />
+        </div>
       </div>
-    </LocomotiveScrollProvider>
+    </div>
   );
 };
 
