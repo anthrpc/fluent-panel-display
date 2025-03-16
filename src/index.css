@@ -37,12 +37,18 @@
   }
   
   body {
-    @apply bg-background text-foreground antialiased scrollbar-hide;
+    @apply bg-background text-foreground antialiased;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-smooth: always;
     letter-spacing: -0.015em;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  html {
+    @apply scroll-smooth;
   }
   
   h1, h2, h3, h4, h5, h6 {
@@ -123,24 +129,6 @@ a, button, .link {
   will-change: transform;
 }
 
-/* Fixed height container for panels */
-.panel-container {
-  position: relative;
-  overflow-y: auto;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-.panel-container::-webkit-scrollbar {
-  display: none;
-}
-
-/* Adding this to ensure elements remain visible after animation */
-.panel-content {
-  will-change: transform, opacity;
-  min-height: 100%;
-}
-
 /* Apply slide in animation */
 @keyframes slideIn {
   0% {
@@ -171,4 +159,10 @@ html.has-scroll-dragging {
 
 .has-scroll-smooth body {
   overflow: hidden;
+}
+
+/* Ensure the left panel stays fixed */
+[data-scroll-section] {
+  position: relative;
+  will-change: transform;
 }

@@ -8,16 +8,11 @@ import Experience from '../components/Experience';
 import Projects from '../components/Projects';
 import Hire from '../components/Hire';
 import Footer from '../components/Footer';
-import { LocomotiveScrollProvider } from 'react-locomotive-scroll';
 import { ScrollArea } from '../components/ui/scroll-area';
 
 const Index: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
-  const contentPanelRef = useRef<HTMLDivElement>(null);
   const cursorGlowRef = useRef<HTMLDivElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const panelScrollRef = useRef<HTMLDivElement>(null);
-  const rightPanelRef = useRef<HTMLDivElement>(null);
   
   // For cursor glow effect
   useEffect(() => {
@@ -44,11 +39,6 @@ const Index: React.FC = () => {
     // Find the active panel and animate its contents
     const activePanel = document.querySelector(`.panel-content[data-section="${activeSection}"]`);
     if (activePanel) {
-      // Scroll to top when changing sections
-      if (contentPanelRef.current) {
-        contentPanelRef.current.scrollTop = 0;
-      }
-      
       // Animate in each child element of the active panel
       const elements = activePanel.querySelectorAll('.animate-element');
       
@@ -89,7 +79,8 @@ const Index: React.FC = () => {
 
   return (
     <div 
-      className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-hidden"
+      className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-x-hidden"
+      data-scroll-container
     >
       {/* Cursor glow effect - positioned at the very back with lower z-index */}
       <div 
@@ -102,8 +93,8 @@ const Index: React.FC = () => {
       
       <div className="container-custom flex-grow flex flex-col relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
-          {/* Left Column - Name and Navigation */}
-          <div className="md:col-span-1 h-full flex flex-col">
+          {/* Left Column - Name, Navigation and Footer */}
+          <div className="md:col-span-1 h-full flex flex-col justify-between">
             <div>
               <h1 className="text-4xl font-bold leading-tight tracking-tight">
                 <MultiLangGreeting />
@@ -111,46 +102,39 @@ const Index: React.FC = () => {
               <p className="mt-4 text-muted-foreground">
                 Open Source AI Model Developer
               </p>
+              
+              <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
             </div>
             
-            <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
+            {/* Moved footer here */}
+            <div className="mt-auto pt-6">
+              <Footer />
+            </div>
           </div>
           
-          {/* Right Column - Content Panels with independent scrolling */}
-          <div className="md:col-span-2 relative h-[calc(100vh-8rem)]">
-            <ScrollArea className="h-full w-full">
-              <div 
-                ref={rightPanelRef}
-                className="pr-4 h-fit" // Added h-fit to ensure the container only takes the height of its content
-              >
-                <div 
-                  ref={contentPanelRef}
-                  className="w-full"
-                >
-                  <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
-                    <About />
-                  </div>
-                  
-                  <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
-                    <Experience />
-                  </div>
-                  
-                  <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
-                    <Projects />
-                  </div>
-                  
-                  <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
-                    <Hire />
-                  </div>
-                </div>
+          {/* Right Column - Content Panels */}
+          <div className="md:col-span-2 relative">
+            <div 
+              className="w-full"
+              data-scroll-section
+            >
+              <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
+                <About />
               </div>
-            </ScrollArea>
+              
+              <div className="panel-content w-full" data-section="experience" style={{display: activeSection === 'experience' ? 'block' : 'none'}}>
+                <Experience />
+              </div>
+              
+              <div className="panel-content w-full" data-section="projects" style={{display: activeSection === 'projects' ? 'block' : 'none'}}>
+                <Projects />
+              </div>
+              
+              <div className="panel-content w-full" data-section="hire" style={{display: activeSection === 'hire' ? 'block' : 'none'}}>
+                <Hire />
+              </div>
+            </div>
           </div>
-        </div>
-
-        {/* Footer - placed outside of the content flow */}
-        <div className="w-full mt-12 pt-6 border-t border-secondary">
-          <Footer />
         </div>
       </div>
     </div>
