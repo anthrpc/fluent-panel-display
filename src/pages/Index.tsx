@@ -8,11 +8,50 @@ import Experience from '../components/Experience';
 import Projects from '../components/Projects';
 import Hire from '../components/Hire';
 import Footer from '../components/Footer';
-import { ScrollArea } from '../components/ui/scroll-area';
+import LocomotiveScroll from 'locomotive-scroll';
+import 'locomotive-scroll/dist/locomotive-scroll.css';
 
 const Index: React.FC = () => {
   const [activeSection, setActiveSection] = useState('about');
   const cursorGlowRef = useRef<HTMLDivElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const locomotiveScrollRef = useRef<LocomotiveScroll | null>(null);
+  
+  // Initialize locomotive scroll
+  useEffect(() => {
+    if (!locomotiveScrollRef.current && scrollRef.current) {
+      locomotiveScrollRef.current = new LocomotiveScroll({
+        el: scrollRef.current,
+        smooth: true,
+        multiplier: 0.8,
+        lerp: 0.1,
+        smartphone: {
+          smooth: true,
+        },
+        tablet: {
+          smooth: true,
+        }
+      });
+      
+      // Clean up on unmount
+      return () => {
+        if (locomotiveScrollRef.current) {
+          locomotiveScrollRef.current.destroy();
+          locomotiveScrollRef.current = null;
+        }
+      };
+    }
+  }, []);
+  
+  // Update locomotive scroll when active section changes
+  useEffect(() => {
+    if (locomotiveScrollRef.current) {
+      // Give time for the DOM to update before updating the scroll
+      setTimeout(() => {
+        locomotiveScrollRef.current?.update();
+      }, 100);
+    }
+  }, [activeSection]);
   
   // For cursor glow effect
   useEffect(() => {
@@ -79,6 +118,7 @@ const Index: React.FC = () => {
 
   return (
     <div 
+      ref={scrollRef}
       className="min-h-screen bg-background text-foreground font-sans flex flex-col scrollbar-hide relative overflow-x-hidden"
       data-scroll-container
     >
@@ -91,10 +131,10 @@ const Index: React.FC = () => {
         }}
       ></div>
       
-      <div className="container-custom flex-grow flex flex-col relative z-10">
+      <div className="container-custom flex-grow flex flex-col relative z-10" data-scroll-section>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 flex-grow">
           {/* Left Column - Name, Navigation and Footer */}
-          <div className="md:col-span-1 h-full flex flex-col justify-between">
+          <div className="md:col-span-1 h-full flex flex-col justify-between" data-scroll data-scroll-speed="0.3">
             <div>
               <h1 className="text-4xl font-bold leading-tight tracking-tight">
                 <MultiLangGreeting />
@@ -106,18 +146,15 @@ const Index: React.FC = () => {
               <NavBar activeSection={activeSection} setActiveSection={setActiveSection} />
             </div>
             
-            {/* Moved footer here */}
+            {/* Footer with animation when active section changes */}
             <div className="mt-auto pt-6">
-              <Footer />
+              <Footer activeSection={activeSection} />
             </div>
           </div>
           
           {/* Right Column - Content Panels */}
-          <div className="md:col-span-2 relative">
-            <div 
-              className="w-full"
-              data-scroll-section
-            >
+          <div className="md:col-span-2 relative" data-scroll data-scroll-speed="0.1">
+            <div className="w-full">
               <div className="panel-content w-full" data-section="about" style={{display: activeSection === 'about' ? 'block' : 'none'}}>
                 <About />
               </div>

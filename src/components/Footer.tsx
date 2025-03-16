@@ -1,13 +1,35 @@
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Github, FileCode2, Globe } from 'lucide-react';
+import { gsap } from 'gsap';
 
-const Footer: React.FC = () => {
+interface FooterProps {
+  activeSection?: string;
+}
+
+const Footer: React.FC<FooterProps> = ({ activeSection }) => {
+  const footerRef = useRef<HTMLDivElement>(null);
   const currentDate = new Date();
   const formattedDate = `${currentDate.getDate()}-${currentDate.getMonth() + 1}-${currentDate.getFullYear()}`;
   
+  // Animation effect when active section changes
+  useEffect(() => {
+    if (footerRef.current) {
+      // Reset to initial state
+      gsap.set(footerRef.current, { opacity: 0.7, y: 5 });
+      
+      // Animate in
+      gsap.to(footerRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 0.5,
+        ease: "power2.out"
+      });
+    }
+  }, [activeSection]);
+  
   return (
-    <footer className="pb-4 border-t border-secondary pt-4">
+    <footer ref={footerRef} className="pb-4 border-t border-secondary pt-4">
       <div className="flex flex-col space-y-3">
         <div className="flex items-center space-x-2">
           <Github size={14} className="text-muted-foreground" />
